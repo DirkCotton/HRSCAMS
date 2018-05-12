@@ -1,0 +1,53 @@
+---
+title: "Consolidation of HRS Households"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+---
+
+This R script, “Strict Consolidate HRS.R”, reads HRS data from a .csv spreadsheet, "rand_0207_with nonretirees.csv". Next, it eliminates all households consisting of three or more HRS respondents.  The script then combines all two-person households into a single row, such that each row of HRS then identifies a single household made up of one or two HRS
+respondents.
+
+Next, the script identifies retired households based on our model rules.  It then collects wealth and income from the HRS data set based on the wave of retirement previously identified for that household.
+
+For two-person households, the household is considered retired when the first respondent iis determined by our rules to have retired. Lastly, a new consolidated (by household) .csv file is created and named, “HRS Retired.csv".
+
+This script consolidates HRS data similarly to 'Consolidate HRS Household Data.R' , an earlier version of retirement-definition rules but use a significantly more strict definition of "retired household." Specifically,
+
+1. A household is considered retired only if one or more members of that household claim full retirement or, if none claims retirement, then from labor force data for respondent data that designates one or more members retired.
+
+2. Missing retirement data for the wave just prior to the wave in which retirement is established by rule #1 renders the age of retirement unclear. For instance, if a household member claims retirement in Wave 4 but retirement status data for wave 3 is missing, it is possible that the respondent was actually retired in wave 3, throwing off the retirement date by as much as 4 years. (Some HRS data has as many as three prior waves of missing data.) 
+
+When retirement status data is unavailable for the wave just prior to the wave retirement is identified by rule #1, that household is not included in the stricter-definition data set. 
+
+NOTE: Retirement claimed in wave 1 is accepted even though there is no previous wave to confirm it.
+
+NOTE: Prior wave confirmation is not required for labor force status data
+
+ 3. In the absence of of claimed retirement data and labor force data, Social Security retirement income is considered an indication of retirement under the looser definition. In this stricter
+regime, beginning Social Security retirement income will only be considered an indication of retirement if, as in step 2, Social Security income data is not missing from the prior wave and the number of hours worked is reported and declines at least 30% from the pre-retirement wave.This R script, “Strict Consolidate HRS.R”, reads HRS data from a .csv spreadsheet, "rand_0207_with nonretirees.csv". Next, it eliminates all households consisting of three or more HRS respondents.  The script then combines all two-person households into a single row, such that each row of HRS then identifies a single household made up of one or two HRS
+respondents.
+
+Next, the script identifies retired households based on our model rules.  It then collects wealth and income from the HRS data set based on the wave of retirement previously identified for that household.
+
+For two-person households, the household is considered retired when the first respondent iis determined by our rules to have retired. Lastly, a new consolidated (by household) .csv file is created and named, “HRS Retired.csv".
+
+This script consolidates HRS data similarly to 'Consolidate HRS Household Data.R' , an earlier version of retirement-definition rules but use a significantly more strict definition of "retired household." Specifically,
+
+1. A household is considered retired only if one or more members of that household claim full retirement or, if none claims retirement, then from labor force data for respondent data that designates one or more members retired.
+
+2. Missing retirement data for the wave just prior to the wave in which retirement is established by rule #1 renders the age of retirement unclear. For instance, if a household member claims retirement in Wave 4 but retirement status data for wave 3 is missing, it is possible that the respondent was actually retired in wave 3, throwing off the retirement date by as much as 4 years. (Some HRS data has as many as three prior waves of missing data.) 
+
+When retirement status data is unavailable for the wave just prior to the wave retirement is identified by rule #1, that household is not included in the stricter-definition data set. 
+
+NOTE: Retirement claimed in wave 1 is accepted even though there is no previous wave to confirm it.
+
+NOTE: Prior wave confirmation is not required for labor force status data
+
+ 3. In the absence of of claimed retirement data and labor force data, Social Security retirement income is considered an indication of retirement under the looser definition. In this stricter regime, beginning Social Security retirement income will only be considered an indication of retirement if, as in step 2, Social Security income data is not missing from the prior wave and the number of hours worked is reported and declines at least 30% from the pre-retirement wave.
+
+```{r warning=F,echo=F}
+source('~/R Projects/HRS/Strict Consolidate HRS.R')
+```
+
