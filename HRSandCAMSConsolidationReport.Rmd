@@ -1,0 +1,30 @@
+---
+title: "HRS and CAMS Consolidation Report Notebook"
+output:
+  word_document: default
+  html_notebook: default
+---
+
+
+```{r warning=F,echo=F}
+load(file="CAMSdataSave.RData")
+
+```
+
+
+HRS contains wealth and income data for over 35,000 individual respondents and CAMS contains consumption data for 6,500 HRS respondents, cross-referenced by HHIDPN. While HRS currently consists of 12 waves of data, CAMS currently only provides consumption data for eight waves, 5 through 12.
+
+The purpose of the “Consolidate CAMS and HRS Household Data.R” script is to consolidate CAMS respondents into one- and two-person households, collect consumption data for the wave of retirement previously determined when processing the HRS data set for each household, and then to match consumption data to HRS wealth and income data by household.
+
+The resulting data set, saved in Excel .csv spreadsheet “CAMS and HRS data.csv”, then contains one record per household of one or two respondents each with both wealth and income data from HRS and consumption data from CAMS for the household’s determined wave of retirement. In other words, “CAMS and HRS data.csv” contains data for wealth, income and consumption at each household’s retirement date (the closest wave number).
+
+Most HRS data set households will not have associated consumption data. Those households that do not include:
+
+-	Households in HRS that have no corresponding data in CAMS
+-	Households in HRS that were not identifiable as retired
+-	Households with retirement identified before Wave 5
+-	Households in CAMS with more than 2 identified members
+
+The result, saved in Excel spreadsheet “CAMS and HRS data.csv” includes `r sum(camsJoined.df$selectedBy != "notRetired" & camsJoined.df$cndurWOR > 0 & camsJoined.df$earliestRetire > 4)` one- and two-person households with wave of retirement between 5 and 12, consumer non-durable consumption identified in CAMS as greater than zero, and “selected by” not indicating “notRetired”.
+
+
